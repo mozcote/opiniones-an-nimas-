@@ -1,1 +1,30 @@
-<?xml version='1.0' encoding='UTF-8'?><Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist.</Message></Error>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opiniones Anónimas</title>
+</head>
+<body>
+    <h1>Opiniones Anónimas</h1>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+        
+        const firebaseConfig = {
+            apiKey: "facil123",
+            authDomain: "facil123",
+            projectId: "facil123",
+            storageBucket: "facil123",
+            messagingSenderId: "facil123",
+            appId: "facil123"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+    </script>
+</body>
+</html>

@@ -12,18 +12,21 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
         import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js';
         
         const firebaseConfig = {
-            apiKey: "facil123",
-            authDomain: "facil123",
-            projectId: "facil123",
-            storageBucket: "facil123",
-            messagingSenderId: "facil123",
-            appId: "facil123"
+            apiKey: "AIzaSyDlXKKGwjy90fRJofaFZVgdFUOVYO9OFNw",
+            authDomain: "danna-eb56d.firebaseapp.com",
+            projectId: "danna-eb56d",
+            storageBucket: "danna-eb56d.firebasestorage.app",
+            messagingSenderId: "912315162017",
+            appId: "1:912315162017:web:e2e351ec7fbe7be14bffe0",
+            measurementId: "G-1L0MTW17VV"
         };
         
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         const db = getFirestore(app);
     </script>
 </body>

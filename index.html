@@ -49,27 +49,6 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
-        #opiniones-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .opinion-card {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .opinion-text {
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-        .opinion-date {
-            color: #666;
-            font-size: 12px;
-            text-align: right;
-        }
         #mensaje {
             padding: 10px;
             margin: 10px 0;
@@ -99,15 +78,10 @@
         <button id="btn-enviar" onclick="enviarOpinion()">Enviar Opinión</button>
         <div id="mensaje"></div>
     </div>
-    
-    <div id="opiniones-container">
-        <h2>Opiniones recientes</h2>
-    </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
-        import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
         import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js';
         
         const firebaseConfig = {
@@ -120,12 +94,10 @@
             measurementId: "G-1L0MTW17VV"
         };
         
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
 
-        // Función para enviar opinión
         window.enviarOpinion = async function() {
             const textoOpinion = document.getElementById('texto-opinion').value.trim();
             const btnEnviar = document.getElementById('btn-enviar');
@@ -164,58 +136,6 @@
                 btnEnviar.textContent = 'Enviar Opinión';
             }
         };
-
-        // Función para cargar y mostrar opiniones en tiempo real
-        function cargarOpiniones() {
-            const q = query(
-                collection(db, 'opiniones'),
-                orderBy('fecha', 'desc'),
-                limit(20)
-            );
-            
-            onSnapshot(q, (querySnapshot) => {
-                const container = document.getElementById('opiniones-container');
-                container.innerHTML = '<h2>Opiniones recientes</h2>';
-                
-                if (querySnapshot.empty) {
-                    container.innerHTML += '<p style="text-align: center; color: #666;">No hay opiniones aún. ¡Sé el primero en compartir!</p>';
-                    return;
-                }
-                
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const fecha = data.fecha ? data.fecha.toDate() : new Date();
-                    const opinionCard = document.createElement('div');
-                    opinionCard.className = 'opinion-card';
-                    opinionCard.innerHTML = `
-                        <div class="opinion-text">${escapeHtml(data.texto)}</div>
-                        <div class="opinion-date">${formatearFecha(fecha)}</div>
-                    `;
-                    container.appendChild(opinionCard);
-                });
-            });
-        }
-
-        // Función para formatear fecha
-        function formatearFecha(fecha) {
-            return fecha.toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        // Función para escapar HTML y prevenir XSS
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Cargar opiniones al iniciar
-        cargarOpiniones();
     </script>
 </body>
 </html>
